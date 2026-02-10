@@ -2,8 +2,12 @@
   "site": {
     "name": "C.H.A.M.P.",
     "timezone": "America/New_York",
+<<<<<<< Updated upstream
     "basePathHint": "/champ-site-project-chitin"
 
+=======
+    "basePathHint": ""
+>>>>>>> Stashed changes
   },
   "data": {
     "news": {

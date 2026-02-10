@@ -7,7 +7,7 @@
   <title>C.H.A.M.P. — Feedback</title>
   <link rel="stylesheet" href="../assets/css/style.css" />
   <script defer src="../assets/js/vendor/luxon.min.js"></script>
-  <script defer src="../assets/js/theme-toggle.js"></script>
+  <!-- theme toggle handled by ../assets/js/champ.js -->
   <script defer src="../assets/js/champ.js"></script>
 </head>
 <body data-page="feedback">
@@ -47,7 +47,7 @@
         <p class="muted">If an event-submission endpoint is configured, this becomes a PR that adds a new event file. Otherwise, you’ll get an email-ready template.</p>
       </header>
 
-      <form id="event-submit-form" class="add-event-form">
+      <form id="submit-event-form" class="add-event-form">
         <div class="form-grid">
           <div class="form-row">
             <label for="event_title">Title</label>
@@ -79,8 +79,10 @@
           </div>
         </div>
 
-        <div class="form-actions"><button type="submit">Submit Event</button></div>
-        <div id="event-submit-result" class="add-event-result"></div>
+        <div class="form-actions">
+          <button type="submit">Submit Event</button>
+          <span id="submit-event-status" class="add-event-result"></span>
+        </div>
       </form>
     </section>
 
