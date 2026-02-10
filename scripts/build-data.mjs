@@ -121,18 +121,41 @@ function buildLinks() {
 }
 
 function normalizeGallery() {
-  const src = path.join(ROOT, 'gallery', 'index.json');
+  const metaDir = path.join(ROOT, 'gallery', 'meta');
+  const legacyIndex = path.join(ROOT, 'gallery', 'index.json');
   const outPath = path.join(ROOT, 'data', 'gallery', 'gallery.json');
   ensureDir(path.dirname(outPath));
 
-  if (!fs.existsSync(src)) {
-    fs.writeFileSync(outPath, JSON.stringify({ items: [] }, null, 2));
-    console.log('No gallery/index.json found; wrote empty gallery.json');
-    return;
+  let items = [];
+
+  // Preferred: gallery/meta/*.json
+  if (fs.existsSync(metaDir) && fs.statSync(metaDir).isDirectory()) {
+    const files = fs.readdirSync(metaDir).filter((f) => f.toLowerCase().endsWith('.json')).sort();
+    for (const file of files) {
+      const full = path.join(metaDir, file);
+      try {
+        const obj = JSON.parse(readText(full));
+        if (obj && typeof obj === 'object') items.push(obj);
+      } catch (e) {
+        console.warn('Error reading gallery meta file', file, e);
+      }
+    }
+  } else if (fs.existsSync(legacyIndex)) {
+    // Backward compatibility: gallery/index.json
+    try {
+      const raw = JSON.parse(readText(legacyIndex));
+      items = Array.isArray(raw.items) ? raw.items : [];
+    } catch (e) {
+      console.warn('Error reading legacy gallery/index.json', e);
+    }
   }
 
-  const raw = JSON.parse(readText(src));
-  const items = Array.isArray(raw.items) ? raw.items : [];
+  // Newest-first by date or id
+  items.sort((a, b) => {
+    const da = a?.date || a?.id || '';
+    const db = b?.date || b?.id || '';
+    return String(db).localeCompare(String(da));
+  });
 
   // Normalize image paths: prefer paths relative to site root.
   const norm = items.map(it => {

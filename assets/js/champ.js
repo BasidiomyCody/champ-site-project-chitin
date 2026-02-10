@@ -12,6 +12,46 @@
   const TAG = '[CHAMP]';
 
   // ------------------------------
+  // Theme toggle (kept tiny + self-contained)
+  // ------------------------------
+
+  const THEME_STORAGE_KEY = 'champ_theme'; // 'dark' | 'light'
+
+  function getPreferredTheme() {
+    const saved = (localStorage.getItem(THEME_STORAGE_KEY) || '').trim().toLowerCase();
+    if (saved === 'dark' || saved === 'light') return saved;
+    // Default: bright site → light mode
+    return 'light';
+  }
+
+  function applyTheme(theme) {
+    const t = theme === 'dark' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = t;
+    localStorage.setItem(THEME_STORAGE_KEY, t);
+
+    const btn = document.querySelector('[data-theme-toggle]');
+    if (btn) {
+      const isDark = t === 'dark';
+      btn.setAttribute('aria-pressed', String(isDark));
+
+      const label = btn.querySelector('.theme-toggle-label');
+      if (label) label.textContent = isDark ? 'Dark' : 'Light';
+    }
+  }
+
+  function initThemeToggle() {
+    // Apply immediately (no DOMContentLoaded required)
+    try { applyTheme(getPreferredTheme()); } catch {}
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target && e.target.closest ? e.target.closest('[data-theme-toggle]') : null;
+      if (!btn) return;
+      const current = (document.documentElement.dataset.theme || 'light').toLowerCase();
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // ------------------------------
   // Core utilities
   // ------------------------------
 
@@ -1236,6 +1276,139 @@
     }
   }
 
+  async function renderGallerySubmit(cfg) {
+    U.setYear('#year');
+
+    const form = U.q('#gallery-submit-form');
+    const statusEl = U.q('#gallery-submit-result');
+    if (!form) return;
+
+    const endpoint = cfg.integrations?.endpoints?.gallerySubmission || '';
+    const photoInput = form.querySelector('input[name="photo"]');
+    const MAX_BYTES = 5 * 1024 * 1024;
+
+    function setStatus(msg, isError = false) {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.style.color = isError ? 'var(--accent-3)' : '';
+    }
+
+    function slugify(s) {
+      return String(s || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
+        .slice(0, 80);
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onerror = () => reject(new Error('Failed to read file.'));
+        r.onload = () => {
+          const res = String(r.result || '');
+          const m = res.match(/^data:[^;]+;base64,(.*)$/);
+          resolve(m ? m[1] : res);
+        };
+        r.readAsDataURL(file);
+      });
+    }
+
+    if (!endpoint) {
+      setStatus('No automated endpoint configured. Submitting will generate a copy/paste PR template.');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fd = new FormData(form);
+      const file = photoInput && photoInput.files && photoInput.files[0] ? photoInput.files[0] : null;
+      if (!file) {
+        setStatus('Please choose a photo to upload.', true);
+        return;
+      }
+      if (file.size > MAX_BYTES) {
+        setStatus('Photo is too large (max 5MB). Please resize and try again.', true);
+        return;
+      }
+
+      const description = String(fd.get('description') || '').trim();
+      const submitted_by = String(fd.get('name') || '').trim();
+      const date = String(fd.get('date') || '').trim();
+      const tags = String(fd.get('tags') || '')
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean);
+
+      // Generate a stable id for manual PRs
+      const day = date || new Date().toISOString().slice(0, 10);
+      const baseId = `${day}-${slugify(description || file.name || 'photo')}`;
+      const uniq = Math.random().toString(16).slice(2, 8);
+      const id = `${baseId}-${uniq}`;
+
+      const ext = (file.name.match(/\.[a-z0-9]+$/i) || [''])[0] || '.jpg';
+      const imageRel = `images/${id}${ext}`;
+
+      if (endpoint) {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+        setStatus('Submitting…');
+
+        try {
+          const b64 = await fileToBase64(file);
+
+          const payload = {
+            id,
+            image: imageRel,
+            description,
+            tags,
+            date: date || '',
+            submitted_by: submitted_by || '',
+            mime: file.type || '',
+            original_filename: file.name || '',
+            bytes: file.size || 0,
+            image_base64: b64,
+            page: window.location.href,
+            timestamp: new Date().toISOString(),
+          };
+
+          const resp = await U.postJson(endpoint, payload);
+          form.reset();
+          const pr = resp && (resp.pr_url || resp.url || resp.html_url);
+          setStatus(pr ? `Submitted! PR: ${pr}` : 'Submitted!');
+        } catch (err) {
+          console.error(TAG, 'gallery submit failed', err);
+          setStatus(err.message || String(err), true);
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+
+        return;
+      }
+
+      // Manual mode: provide a PR-ready template.
+      const meta = {
+        id,
+        image: imageRel,
+        description,
+        tags,
+        date: date || '',
+        submitted_by: submitted_by || '',
+        mime: file.type || '',
+      };
+
+      const template =
+        `Manual submission (no endpoint configured)\n\n` +
+        `1) Add the image file:\n   gallery/images/${id}${ext}\n` +
+        `2) Add the meta JSON file:\n   gallery/meta/${id}.json\n\n` +
+        `gallery/meta/${id}.json contents:\n` +
+        JSON.stringify(meta, null, 2);
+
+      // Use textContent to keep it simple and safe.
+      setStatus(template);
+    });
+  }
+
   async function renderFeedback(cfg) {
     U.setYear('#year');
 
@@ -1348,6 +1521,7 @@
 
   async function boot() {
     try {
+      initThemeToggle();
       const cfg = await U.readConfig();
       // now base() can trust cfg
       // (U.base() reads _cache.config)
@@ -1372,6 +1546,9 @@
           break;
         case 'gallery':
           await renderGallery(cfg);
+          break;
+        case 'gallery-submit':
+          await renderGallerySubmit(cfg);
           break;
         case 'links':
           await renderLinks(cfg);

@@ -1,6 +1,28 @@
 {
   "items": [
     {
+      "id": "news-19ba2aa9775396d0",
+      "image": "gallery/images/news-19ba2aa9775396d0.jpg",
+      "description": "[CHAMP: News] Call for ideas: C.H.A.M.P. - Community Hub for Actualizing Mycological Passion",
+      "tags": [
+        "news-headline"
+      ],
+      "date": "2026-01-09",
+      "submitted_by": "BasidiomyCody <basidiomycody@gmail.com>",
+      "mime": "image/jpeg"
+    },
+    {
+      "id": "news-19ba56a6ff0b13a8",
+      "image": "gallery/images/news-19ba56a6ff0b13a8.jpg",
+      "description": "[CHAMP: News] C.H.A.M.P. visits BOSLab (01-09-26). Field notes.",
+      "tags": [
+        "news-headline"
+      ],
+      "date": "2026-01-09",
+      "submitted_by": "BasidiomyCody <basidiomycody@gmail.com>",
+      "mime": "image/jpeg"
+    },
+    {
       "id": "news-19b0884cd6ad79eb",
       "image": "gallery/images/news-19b0884cd6ad79eb.jpg",
       "description": "[CHAMP: News] C.H.A.M.P.?s Weekend Update; Forecasting Next Events",

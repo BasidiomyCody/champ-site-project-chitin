@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-data.mjs",
-    "check": "node --check assets/js/champ.js && node scripts/build-data.mjs"
+    "check": "node --check assets/js/champ.js && node scripts/verify-generated.mjs",
+    "check:generated": "node scripts/verify-generated.mjs"
   },
   "engines": {
     "node": ">=18"

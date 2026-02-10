@@ -2,72 +2,67 @@
 /* Champ Site CSS */
 
 :root {
-  /* 60% — Neutrals (backgrounds, panels, main text) */
-  --bg: #f5f1ea;              /* paper / spore print cream */
-  --bg-alt: #ece4d6;          /* subtle page background variation */
-  --panel: #ffffff;           /* cards / elevated surfaces */
-  --panel-soft: #f2ebe0;      /* soft blocks, nav, inputs */
-  --border-subtle: #d4c9b6;   /* light lines */
-  --border-strong: #b5aa94;   /* stronger dividers */
-  --shadow-soft: 0 14px 32px rgba(34, 28, 18, 0.12);
+  /* Bright, clean, "engine-first" palette */
+  --bg: #f7fafc;
+  --bg-alt: #eef2ff;
+  --panel: #ffffff;
+  --panel-soft: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --shadow-soft: 0 12px 28px rgba(2, 6, 23, 0.08);
 
-  --text: #222421;            /* main ink */
-  --text-2: #3b4134;          /* secondary headers */
-  --muted: #656a59;           /* body-muted text */
+  --text: #0f172a;
+  --text-2: #1e293b;
+  --muted: #475569;
 
-  /* 30% — Earthy contrast (mushroom/lichen tones) */
-  --accent-soft: #908362;     /* cap / gill brown */
-  --accent-soft-bg: #f3ecdf;  /* very light brown-tinted background */
-  --accent-contrast: #7f8a50; /* lichen/moss green */
+  --accent-soft: #94a3b8;
+  --accent-soft-bg: #f1f5f9;
+  --accent-contrast: #0ea5e9;
 
-  /* 10% — Vibrant accent (fungal dye / rust / spore print red) */
-  --accent: #c85c3f;          /* main highlight */
-  --accent-2: #984235;        /* deeper rust / for text emphasis */
-  --accent-3: #5E0B15;
-  --accent-4: #ffd67c;        /* bright secondary accent */
-  --accent-5: #f09744;
-  --accent-6: #6d9f96;        /* deeper rust / for text emphasis */
-  --accent-7: #1b3f2f;
-  --accent-8: #194370;        /* bright secondary accent */
-  --accent-9: #86aec8;
+  --accent: #2563eb;
+  --accent-2: #1d4ed8;
+  --accent-3: #b91c1c;  /* errors */
+  --accent-4: #bfdbfe;  /* soft highlight */
+  --accent-5: #93c5fd;  /* soft highlight 2 */
+  --accent-6: #22c55e;
+  --accent-7: #0b1220;
+  --accent-8: #7c3aed;
+  --accent-9: #14b8a6;
 
-  --ring: #3b4331;            /* focus rings, strong outlines */
-  --dark: #161711;            /* deep background for some cards */
+  --ring: #2563eb;
+  --dark: #0b1220;
 }
 
 /* Dark theme overrides */
 :root[data-theme="dark"] {
-  /* Neutrals become spore-print charcoal & dark lab bench */
-  --bg: #171120;
-  --bg-alt: #19151c;
-  --panel: #18161a;
-  --panel-soft: #221c21;
-  --border-subtle: #303427;
-  --border-strong: #505742;
-  --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --bg: #0b1220;
+  --bg-alt: #111827;
+  --panel: #0f172a;
+  --panel-soft: #111c33;
+  --border-subtle: #1f2937;
+  --border-strong: #334155;
+  --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.55);
 
-  --text: #f3eee3;
-  --text-2: #806485;
-  --muted: #937c6e;
+  --text: #e5e7eb;
+  --text-2: #f1f5f9;
+  --muted: #9ca3af;
 
-  /* Earthy contrast—same hue family, flipped value */
-  --accent-soft: #dbc9af;
-  --accent-soft-bg: #26211b;
-  --accent-contrast: #4e6427;
+  --accent-soft: #334155;
+  --accent-soft-bg: #111827;
+  --accent-contrast: #38bdf8;
 
-  /* Vibrant accents pop a bit more on dark */
-  --accent: #2e2039;
-  --accent-2: #4e3c62;
-  --accent-3: #5e0b15;  /* your deep wine stays */
-  --accent-4: #ffdc8a;
-  --accent-5: #f6a553;
-  --accent-6: #6d789f;        /* deeper rust / for text emphasis */
-  --accent-7: #1c1b3f;
-  --accent-8: #701954;        /* bright secondary accent */
-  --accent-9: #c886c6;
+  --accent: #60a5fa;
+  --accent-2: #93c5fd;
+  --accent-3: #f87171;
+  --accent-4: #1d4ed8;
+  --accent-5: #2563eb;
+  --accent-6: #34d399;
+  --accent-7: #0b1220;
+  --accent-8: #a78bfa;
+  --accent-9: #2dd4bf;
 
-  --ring: #d4cfb0;
-  --dark: #0f0919;
+  --ring: #60a5fa;
+  --dark: #000814;
 }
 
 * {
@@ -182,7 +177,7 @@ body {
 .site-nav a:hover {
   color: var(--accent-2);
   border-color: var(--border-strong);
-  background: #f0e5d4;
+  background: var(--bg-alt);
   transform: translateY(-1px);
 }
 
@@ -204,7 +199,7 @@ body {
 }
 
 .theme-toggle:hover {
-  background: #e0d5c7;
+  background: var(--bg-alt);
   border-color: var(--border-strong);
   transform: translateY(-1px);
 }
@@ -311,7 +306,7 @@ body {
 }
 
 .calendar .header button:hover {
-  background: #e8ddcf;
+  background: var(--bg-alt);
   border-color: var(--border-strong);
 }
 
