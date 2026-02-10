@@ -82,7 +82,7 @@ function buildEvents() {
 
   items.sort((a,b)=>String(a.sortKey).localeCompare(String(b.sortKey)));
 
-  fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items }, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify({ items }, null, 2));
   console.log(`Wrote ${items.length} events -> ${path.relative(ROOT, outPath)}`);
 }
 
@@ -116,7 +116,7 @@ function buildLinks() {
 
   items.sort((a,b)=>String(a.sortKey).localeCompare(String(b.sortKey)));
 
-  fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items }, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify({ items }, null, 2));
   console.log(`Wrote ${items.length} links -> ${path.relative(ROOT, outPath)}`);
 }
 
@@ -171,7 +171,7 @@ function normalizeGallery() {
     };
   });
 
-  fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items: norm }, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify({ items: norm }, null, 2));
   console.log(`Wrote ${norm.length} gallery items -> ${path.relative(ROOT, outPath)}`);
 }
 
@@ -180,7 +180,6 @@ function buildMapsPlaceholder() {
   ensureDir(path.dirname(outPath));
   if (fs.existsSync(outPath)) return;
   const example = {
-    updatedAt: new Date().toISOString(),
     items: [
       {
         id: 'north-shore-forays',
