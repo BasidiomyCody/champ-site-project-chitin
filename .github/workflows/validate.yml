@@ -1,0 +1,24 @@
+name: Validate data build
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build data
+        run: npm run build:data
+      - name: Ensure generated JSON is committed
+        run: |
+          if ! git diff --quiet; then
+            echo "Generated data is out of date. Run 'npm run build:data' and commit the changes." >&2
+            git diff --name-only
+            exit 1
+          fi

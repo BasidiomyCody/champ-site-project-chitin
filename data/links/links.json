@@ -1,0 +1,50 @@
+{
+  "updatedAt": "2026-02-09T23:10:54.219Z",
+  "items": [
+    {
+      "id": "champ-org-proposal.txt",
+      "title": "[Proposed] C.H.A.M.P. Organizational Structure - Cody Crossley",
+      "url": "https://docs.google.com/document/d/1vOvdHfKWks2U2AzUQM5E78UAumyh9spHN27nB3K02qo/edit?usp=sharing",
+      "description": "A first draft proposal for the decentralized structure of governance for CHAMP- based on mycelial network dynamics.",
+      "category": "Google Docs",
+      "sortKey": "Google Docs::[Proposed] C.H.A.M.P. Organizational Structure - Cody Crossley",
+      "source": "content/links"
+    },
+    {
+      "id": "champ-first-meeting-notes.txt",
+      "title": "First Meeting Notes (10-17-25) - Jon Applefield",
+      "url": "https://docs.google.com/document/d/11lADCB9bFD4vD4SnSDupXL7S__kaE-7kQYEsD8fPpB4/edit?usp=sharing",
+      "description": "Check in on what happened at the inaugural meeting of C.H.A.M.P.!",
+      "category": "Google Docs",
+      "sortKey": "Google Docs::First Meeting Notes (10-17-25) - Jon Applefield",
+      "source": "content/links"
+    },
+    {
+      "id": "champ-friendsgiving-table-notes.txt",
+      "title": "Friendsgiving '25 Table Notes (11-23-25) - Jon Applefield",
+      "url": "https://docs.google.com/document/d/12LlJF28Dy2HW5zsaX1XfRtjXkuReddFks4hYmYhabYk/edit?usp=sharing",
+      "description": "Notes from the discussions that happened during the first Friendsgiving of C.H.A.M.P.!",
+      "category": "Google Docs",
+      "sortKey": "Google Docs::Friendsgiving '25 Table Notes (11-23-25) - Jon Applefield",
+      "source": "content/links"
+    },
+    {
+      "id": "champ-contact-list.txt",
+      "title": "C.H.A.M.P. Member Contact Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1eDgHEFcqv6ZFrzvurP0dLvN0ZE348OF1Ub8GP8KivdE/edit?usp=sharing",
+      "description": "Names, emails, and phone numbers for members of CHAMP.",
+      "category": "Google Sheets",
+      "sortKey": "Google Sheets::C.H.A.M.P. Member Contact Sheet",
+      "source": "content/links"
+    },
+    {
+      "id": "charlotte-rogg-substack.txt",
+      "title": "Char Rogg Substack",
+      "url": "https://metamorphosisworks.substack.com/",
+      "description": "Subscribe to hear the writings of CHAMP member Charlotte Rogg!",
+      "category": "Substack",
+      "sortKey": "Substack::Char Rogg Substack",
+      "source": "content/links"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "site": {
+    "name": "C.H.A.M.P.",
+    "timezone": "America/New_York",
+    "basePathHint": "/champ-site"
+  },
+  "data": {
+    "news": {
+      "items": "data/news/news.json",
+      "pinned": "data/news/pinned.json",
+      "archived": "data/news/archived.json"
+    },
+    "events": "data/events/events.json",
+    "links": "data/links/links.json",
+    "gallery": "data/gallery/gallery.json",
+    "proton": "data/proton-feed.json",
+    "maps": "data/maps/maps.json"
+  },
+  "integrations": {
+    "formspree": {
+      "suggestionEndpoint": ""
+    },
+    "endpoints": {
+      "eventSubmission": "",
+      "gallerySubmission": "",
+      "news": {
+        "upsert": "",
+        "archive": "",
+        "pin": "",
+        "unpin": ""
+      }
+    }
+  }
+}
