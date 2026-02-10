@@ -1,0 +1,1456 @@
+
+/* Champ Site CSS */
+
+:root {
+  /* 60% — Neutrals (backgrounds, panels, main text) */
+  --bg: #f5f1ea;              /* paper / spore print cream */
+  --bg-alt: #ece4d6;          /* subtle page background variation */
+  --panel: #ffffff;           /* cards / elevated surfaces */
+  --panel-soft: #f2ebe0;      /* soft blocks, nav, inputs */
+  --border-subtle: #d4c9b6;   /* light lines */
+  --border-strong: #b5aa94;   /* stronger dividers */
+  --shadow-soft: 0 14px 32px rgba(34, 28, 18, 0.12);
+
+  --text: #222421;            /* main ink */
+  --text-2: #3b4134;          /* secondary headers */
+  --muted: #656a59;           /* body-muted text */
+
+  /* 30% — Earthy contrast (mushroom/lichen tones) */
+  --accent-soft: #908362;     /* cap / gill brown */
+  --accent-soft-bg: #f3ecdf;  /* very light brown-tinted background */
+  --accent-contrast: #7f8a50; /* lichen/moss green */
+
+  /* 10% — Vibrant accent (fungal dye / rust / spore print red) */
+  --accent: #c85c3f;          /* main highlight */
+  --accent-2: #984235;        /* deeper rust / for text emphasis */
+  --accent-3: #5E0B15;
+  --accent-4: #ffd67c;        /* bright secondary accent */
+  --accent-5: #f09744;
+  --accent-6: #6d9f96;        /* deeper rust / for text emphasis */
+  --accent-7: #1b3f2f;
+  --accent-8: #194370;        /* bright secondary accent */
+  --accent-9: #86aec8;
+
+  --ring: #3b4331;            /* focus rings, strong outlines */
+  --dark: #161711;            /* deep background for some cards */
+}
+
+/* Dark theme overrides */
+:root[data-theme="dark"] {
+  /* Neutrals become spore-print charcoal & dark lab bench */
+  --bg: #171120;
+  --bg-alt: #19151c;
+  --panel: #18161a;
+  --panel-soft: #221c21;
+  --border-subtle: #303427;
+  --border-strong: #505742;
+  --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.6);
+
+  --text: #f3eee3;
+  --text-2: #806485;
+  --muted: #937c6e;
+
+  /* Earthy contrast—same hue family, flipped value */
+  --accent-soft: #dbc9af;
+  --accent-soft-bg: #26211b;
+  --accent-contrast: #4e6427;
+
+  /* Vibrant accents pop a bit more on dark */
+  --accent: #2e2039;
+  --accent-2: #4e3c62;
+  --accent-3: #5e0b15;  /* your deep wine stays */
+  --accent-4: #ffdc8a;
+  --accent-5: #f6a553;
+  --accent-6: #6d789f;        /* deeper rust / for text emphasis */
+  --accent-7: #1c1b3f;
+  --accent-8: #701954;        /* bright secondary accent */
+  --accent-9: #c886c6;
+
+  --ring: #d4cfb0;
+  --dark: #0f0919;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background:
+    radial-gradient(900px 600px at 0% -10%, var(--bg-alt), var(--bg)) fixed;
+}
+
+/* Header & footer */
+
+.site-header,
+.site-footer {
+  padding: 16px clamp(12px, 4vw, 36px);
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+}
+
+
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: none;
+  margin-top: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Logo box around your image */
+.logo {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 48px;
+  background: linear-gradient(135deg, var(--panel), var(--panel-soft));
+  box-shadow: 0 0 0 1px var(--border-subtle) inset;
+}
+
+.logo img {
+  width: 64px;           
+  height: 64px;
+  border-radius:48px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .logo img {
+    width: 32px;
+    height: 32px;
+    border-radius:48px;
+  }
+}
+
+.titles h1 {
+  margin: 0;
+  font-size: 2.6rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.titles p {
+  margin: 0.125rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Nav */
+
+.site-nav {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  color: var(--text-2);
+  background: var(--panel-soft);
+  text-decoration: none;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, transform 0.1s ease;
+}
+
+.site-nav a.active,
+.site-nav a:hover {
+  color: var(--accent-2);
+  border-color: var(--border-strong);
+  background: #f0e5d4;
+  transform: translateY(-1px);
+}
+
+/* Theme toggle flipper on nav */
+.theme-toggle {
+  margin-left: auto; /* pushes it to the right on the nav row */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--panel-soft);
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: background 0.15s ease, border-color 0.15s ease,
+    transform 0.1s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: #e0d5c7;
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-track {
+  width: 34px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  box-sizing: border-box;
+}
+
+.theme-toggle-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+/* label text */
+.theme-toggle-label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Dark mode: thumb slides to the right & color shifts */
+:root[data-theme="dark"] .theme-toggle-thumb {
+  transform: translateX(14px);
+  background: var(--accent-4);
+}
+
+/* Slightly different label color in dark mode */
+:root[data-theme="dark"] .theme-toggle {
+  color: var(--text-2);
+}
+
+
+/* Generic card & grid */
+
+.grid {
+  padding: 16px clamp(12px, 4vw, 36px);
+  display: grid;
+  grid-template-rows: repeat(minmax(350px, 1fr), auto-fit);
+  grid-auto-columns: 2fr;
+  gap: 10px;
+}
+
+.card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-soft));
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+  color: var(--text-2);
+}
+
+.card .muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Generic page main layout (calendar, etc.) */
+
+.page-main {
+  padding: 24px clamp(12px, 4vw, 36px);
+}
+
+/* Calendar */
+
+.calendar {
+  display: grid;
+  gap: 6px;
+  align-self: center;
+  max-width: 1000px;
+}
+
+.calendar .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  color: var(--text-2);
+}
+
+.calendar .header button {
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--panel-soft);
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-2);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.calendar .header button:hover {
+  background: #e8ddcf;
+  border-color: var(--border-strong);
+}
+
+.calendar .grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar .dow {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 2px 0;
+}
+
+.calendar .cell {
+  background: var(--panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 4px;
+  min-height: 52px;
+  position: relative;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease,
+    transform 0.08s ease;
+}
+
+.calendar .cell:hover {
+  border-color: var(--accent-soft);
+  box-shadow: 0 4px 12px rgba(34, 28, 18, 0.12);
+  transform: translateY(-1px);
+}
+
+.calendar .date {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  color: var(--accent);
+  font-size: 0.78rem;
+}
+
+.event-pill {
+  display: block;
+  margin-top: 6px;
+  padding: 6px 6px;
+  border-radius: 48px;
+  background: linear-gradient(0deg, var(--accent-5), var(--accent-4));
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.event-pill .t {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.event-pill .l {
+  color: var(--text-2);
+  font-size: 0.75rem;
+}
+
+/* Calendar page card fills nicely on both desktop and mobile */
+
+.calendar-page-card {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.calendar-page {
+  margin-top: 12px;
+}
+
+/* Compact calendar on very small screens */
+
+@media (max-width: 600px) {
+  .calendar .cell {
+    min-height: 60px;
+    padding: 6px;
+  }
+
+  .event-pill {
+    margin-top: 16px;
+    font-size: 0.78rem;
+  }
+
+  .titles h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Proton feed */
+
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feed-item {
+  background: var(--panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.feed-item .meta {
+  display: flex;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.feed-item .subj {
+  margin: 4px 0;
+  color: var(--text-2);
+}
+
+/* Suggestion box */
+
+.form {
+  display: grid;
+  gap: 10px;
+  font-size: 1.1rem;
+  text-align: left;
+  color: var(--accent-2);
+}
+
+input,
+textarea,
+select {
+  background: var(--panel-soft);
+  color: var(--text);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+input, textarea {
+  width: fit-content;
+  min-width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--accent-contrast);
+  outline-offset: 1px;
+  border-color: var(--accent-contrast);
+}
+
+button {
+  cursor: pointer;
+  background: var(--panel-soft);
+  color: var(--text-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    transform 0.08s ease, color 0.15s ease;
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  border-color: var(--accent-2);
+  color: #fffdf7;
+}
+
+button.primary:hover {
+  filter: brightness(1.02);
+  transform: translateY(-1px);
+}
+
+button:hover:not(.primary) {
+  background: #e9decf;
+  border-color: var(--border-strong);
+}
+
+.status {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Frontpage layout */
+
+.frontpage-grid {
+  padding: 24px clamp(12px, 4vw, 36px);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+  grid-auto-rows: minmax(150px, auto);
+  gap: 18px;
+}
+
+.front-section-header h2 {
+  margin: 0 0 4px;
+}
+
+.front-section-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* On small screens, stack sections */
+
+@media (max-width: 800px) {
+  .frontpage-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Events grid */
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.event-card {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--panel-soft);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    border-color 0.12s ease, background 0.12s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-soft);
+  box-shadow: 0 8px 20px rgba(34, 28, 18, 0.16);
+  background: #f4ebdf;
+}
+
+.event-card-thumb {
+  flex: 0 0 64px;
+  height: 64px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 30% 20%, #f6efe3, #e1d4c0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.event-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-card-thumb span {
+  font-size: 1.5rem;
+}
+
+.event-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.event-card-date {
+  font-size: 0.8rem;
+  color: var(--accent-contrast);
+}
+
+.event-card-title {
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--text-2);
+}
+
+.event-card-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Event detail page */
+
+.event-detail-main {
+  padding: 24px clamp(12px, 4vw, 36px);
+}
+
+.event-detail-header {
+  margin-bottom: 12px;
+}
+
+.event-detail-date {
+  font-size: 0.9rem;
+  color: var(--accent-contrast);
+  margin: 0 0 4px;
+}
+
+.event-detail-title {
+  margin: 0 0 6px;
+  color: var(--text-2);
+}
+
+.event-detail-location {
+  margin: 0;
+  color: var(--muted);
+}
+
+.event-detail-body p {
+  margin-top: 0;
+}
+
+.event-detail-link {
+  color: var(--accent-2);
+  text-decoration: none;
+}
+
+.event-detail-link:hover {
+  text-decoration: underline;
+}
+
+/* Links grid on frontpage */
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.link-card {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--accent-4);
+  border: 1px solid #23251b;
+  text-decoration: none;
+  color: var(--accent-7);
+  transition: transform 0.1s ease, box-shadow 0.1s ease,
+    border-color 0.1s ease, background 0.12s ease;
+}
+
+.link-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-7);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+  background: var(--accent-5);
+}
+
+.link-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.link-card-meta {
+  font-size: 0.8rem;
+  color: var(--accent-3);
+  margin-bottom: 4px;
+}
+
+.link-card-desc {
+  font-size: 0.85rem;
+  color: var(--accent-8);
+}
+
+/* Add event page */
+
+.add-event-card {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.add-event-form {
+  margin-top: 12px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-row label {
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+
+.form-row input,
+.form-row textarea {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: var(--panel-soft);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: 2px solid var(--accent-contrast);
+  border-color: var(--accent-contrast);
+}
+
+.form-actions {
+  margin-top: 10px;
+}
+
+.form-actions button {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--bg);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.form-actions button:hover {
+  opacity: 0.95;
+}
+
+.add-event-result {
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+.add-event-result.success {
+  color: #4d8b4d;
+}
+
+.add-event-result.error {
+  color: #c54444;
+}
+
+/* Gallery grid */
+.gallery-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Single column on mobile */
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.gallery-item {
+  background: var(--panel-soft);
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-soft);
+}
+
+.gallery-item-img-wrap {
+  position: relative;
+  background: #0b0b0a;
+}
+
+.gallery-item-img-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.gallery-item-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gallery-item-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.gallery-item-desc {
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+
+.gallery-item-tags {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--accent-contrast);
+}
+
+.image-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  background: var(--panel-soft);
+  border-radius: 10px;
+}
+
+.gallery-heic-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--panel-soft);
+  color: var(--muted);
+  text-align: center;
+  min-height: 160px;
+}
+
+.gallery-heic-icon {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.gallery-heic-text {
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.gallery-heic-text a {
+  color: var(--accent-2);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.gallery-heic-filename {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  opacity: 0.9;
+  word-break: break-word;
+}
+
+.gallery-image-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--panel-soft);
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  min-height: 160px;
+}
+
+/* News page layout */
+
+.news-page-main {
+  padding: 24px clamp(12px, 4vw, 36px);
+}
+
+.news-page-header h2 {
+  margin: 0 0 4px;
+}
+
+.news-page-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* 3-column newsletter grid on desktop */
+.news-page-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Responsive: 2 columns on medium, 1 on small */
+@media (max-width: 1100px) {
+  .news-page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .news-page-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.news-article-card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-soft));
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+}
+
+.news-article-image img {
+  width: 100%;
+  display: block;
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.news-article-body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.news-article-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.news-article-title {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-2);
+}
+
+.news-article-snippet {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* Tag pills for different article types */
+
+.news-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+/* Color system for types (matches your palette) */
+
+.news-tag-news {
+  background: var(--accent-soft-bg);
+  color: var(--accent-soft);
+  border: 1px solid var(--border-subtle);
+}
+
+.news-tag-event {
+  background: rgba(127, 138, 80, 0.12); /* mossy */
+  color: var(--accent-contrast);
+  border: 1px solid rgba(127, 138, 80, 0.4);
+}
+
+.news-tag-friends {
+  background: rgba(200, 92, 63, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(200, 92, 63, 0.45);
+}
+
+.news-tag-question {
+  background: rgba(255, 214, 124, 0.2);
+  color: var(--accent-2);
+  border: 1px solid rgba(255, 214, 124, 0.7);
+}
+
+.news-tag-poll {
+  background: rgba(94, 11, 21, 0.1);
+  color: var(--accent-3);
+  border: 1px solid rgba(94, 11, 21, 0.4);
+}
+
+/* Optional: subtle left border tint on cards by type */
+
+.news-type-news {
+  border-left: 4px solid var(--accent-soft);
+}
+
+.news-type-event {
+  border-left: 4px solid var(--accent-contrast);
+}
+
+.news-type-friends {
+  border-left: 4px solid var(--accent);
+}
+
+.news-type-question {
+  border-left: 4px solid var(--accent-4);
+}
+
+.news-type-poll {
+  border-left: 4px solid var(--accent-3);
+}
+
+/* Reuse tags on frontpage news cards */
+.news-card .news-tag {
+  margin-bottom: 4px;
+}
+
+.news-toggle {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--panel-soft);
+  color: var(--text-2);
+}
+
+.news-toggle:hover {
+  background: #e9decf;
+  border-color: var(--border-strong);
+}
+
+.news-article-controls {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.news-archive-btn {
+  align-self: flex-start;
+  background: var(--accent-5);
+  color: var(--accent-3);
+  border: 1px solid var(--accent-2);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.news-archive-btn:hover { filter: brightness(1.05); }
+
+/* ============================
+   News Tiles: Category Colors + Vertical Tab
+   Requires:
+   - card element has class: .news-article-card and .news-type-<type>
+   - label element has class: .news-tag and .news-tag-<type>
+   ============================ */
+
+/* Base tile behavior */
+.news-article-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  background: var(--panel);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.news-article-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(34, 28, 18, 0.16);
+}
+
+/* Create a subtle "category band" across the top */
+.news-article-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 6px;
+  width: 100%;
+  background: var(--news-accent, var(--accent));
+  opacity: 0.9;
+}
+
+/* Vertical tab label (uses the existing .news-tag element) */
+.news-article-card .news-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+
+  /* vertical tab styling */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 92px;
+  width: 28px;
+  padding: 0;
+
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+
+  background: var(--news-accent, var(--accent));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  /* make the text vertical */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg); /* reads top-to-bottom visually */
+
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+}
+
+/* Add breathing room so the tab doesn't overlap text */
+.news-article-card .news-article-body {
+  padding-left: 44px; /* room for the vertical tab */
+}
+
+/* If you have an image at top, ensure tab sits above it nicely */
+.news-article-card .news-article-image {
+  position: relative;
+}
+
+/* ----------------------------
+   Category color assignments
+   ---------------------------- */
+
+/* Default (news) */
+.news-type-news {
+  --news-accent: var(--accent);
+}
+.news-tag-news {
+  background: var(--accent);
+}
+
+/* Event (time sensitive but lower priority) */
+.news-type-event {
+  --news-accent: var(--accent-contrast); /* lichen green */
+}
+.news-tag-event {
+  background: var(--accent-contrast);
+}
+
+/* Friends / affiliates */
+.news-type-friends {
+  --news-accent: #6d78a8; /* muted academic indigo */
+}
+.news-tag-friends {
+  background: #6d78a8;
+}
+
+/* Question (call for responses) */
+.news-type-question {
+  --news-accent: #b07a2a; /* ochre / spore print gold */
+}
+.news-tag-question {
+  background: #b07a2a;
+}
+
+/* Poll (admin decision / formal) */
+.news-type-poll {
+  --news-accent: #7a5aa6; /* muted violet */
+}
+.news-tag-poll {
+  background: #7a5aa6;
+}
+
+/* In the News (external coverage) */
+.news-type-in-the-news {
+  --news-accent: #2f7f86; /* teal / scientific */
+}
+.news-tag-in-the-news {
+  background: #2f7f86;
+}
+
+/* Make borders subtly reflect category */
+/* ============================
+   News Category Styling (CHAMP)
+   Types:
+   announcement, updates, field-notes, in-the-news, ideas, admin, qa
+   ============================ */
+
+.news-type-announcement { --news-accent: #e3c14a; }   /* honey yellow */
+.news-type-updates      { --news-accent: #6a2c70; }   /* purple/burgundy */
+.news-type-field-notes  { --news-accent: #5f7a3a; }   /* moss green */
+.news-type-in-the-news  { --news-accent: #4f77a6; }   /* unsaturated blue */
+.news-type-ideas        { --news-accent: #c56a2a; }   /* orange → rust */
+.news-type-admin        { --news-accent: #d77a8a; }   /* salmon → pink */
+.news-type-qa           { --news-accent: #8e6bbf; }   /* lilac purple */
+
+/* Use the accent to color the vertical tab */
+.news-tag-announcement,
+.news-tag-updates,
+.news-tag-field-notes,
+.news-tag-in-the-news,
+.news-tag-ideas,
+.news-tag-admin,
+.news-tag-qa {
+  background: var(--news-accent);
+}
+
+/* Announcements: bold label + bold body */
+.news-type-announcement .news-tag {
+  font-weight: 800;
+}
+.news-type-announcement .news-article-title,
+.news-type-announcement .news-article-snippet,
+.news-type-announcement .news-article-meta {
+  font-weight: 700;
+}
+
+/* Updates: burgundy/purple label + bold body text */
+.news-type-updates .news-article-snippet,
+.news-type-updates .news-article-title {
+  font-weight: 700;
+}
+
+/* Ideas: slightly warmer hover emphasis */
+.news-type-ideas:hover {
+  border-color: color-mix(in oklab, var(--news-accent) 45%, var(--border-subtle));
+}
+
+/* Ensure dark tiles remain readable in dark mode */
+[data-theme="dark"] .news-article-card {
+  background: color-mix(in oklab, var(--panel) 92%, #000 8%);
+}
+
+.news-article-card {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--news-accent) 6%, var(--panel)) 0%,
+    var(--panel) 40%
+  );
+}
+
+/* News filters */
+.news-filters {
+  margin: 0 0 12px;
+}
+
+.news-filter-wrap {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.news-filter-label {
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.news-filter-select,
+.news-sort-select {
+  background: var(--panel-soft);
+  color: var(--text);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   FRONT PAGE (index.html) — Module Grid + Feed Cards
+   Scoped to avoid collisions with other pages.
+   Requires <body class="page-home"> on index.html (recommended)
+   ========================================================= */
+
+/* Optional but recommended: add <body class="page-home"> on index.html */
+.page-home main {
+  padding: 18px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* 3 / 2 / 1 responsive module grid */
+.page-home .module-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start; /* variable heights */
+}
+
+@media (min-width: 720px) {
+  .page-home .module-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1080px) {
+  .page-home .module-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Feed container cards */
+.page-home .feed-card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-soft));
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.page-home .feed-head {
+  padding: 14px 14px 10px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-home .feed-title {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+  color: var(--text-2);
+}
+
+.page-home .feed-status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
+}
+
+.page-home .feed-body {
+  padding: 12px 14px 14px;
+}
+
+/* List-style feeds (news-grid / events-grid / links-grid contents) */
+.page-home .feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------
+   Tile compatibility for index feed items ONLY
+   (Avoids overriding cards on other pages.)
+   --------------------------------------------------------- */
+
+/* Your modules use .event-card, .event-card-thumb, etc.
+   Scope them so they only affect the frontpage feeds. */
+.page-home .feed-card .event-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 10px;
+  align-items: start;
+  background: var(--panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.page-home .feed-card .event-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 20px rgba(34, 28, 18, 0.16);
+  transform: translateY(-1px);
+}
+
+.page-home .feed-card .event-card-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 30% 20%, #f6efe3, #e1d4c0);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.page-home .feed-card .event-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.page-home .feed-card .event-card-body {
+  min-width: 0;
+}
+
+.page-home .feed-card .event-card-date {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.page-home .feed-card .event-card-title {
+  margin: 0 0 6px;
+  font-size: 0.98rem;
+  font-weight: 650;
+  color: var(--text-2);
+}
+
+.page-home .feed-card .event-card-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.page-home .feed-card .news-read-more {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  color: var(--accent-2);
+}
+
+/* ---------------------------------------------------------
+   Frontpage News Category Tag Pills (simple pill style)
+   Keeps your existing news-page "tab" styling untouched.
+   --------------------------------------------------------- */
+
+.page-home .feed-card .news-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 8px;
+}
+
+/* CHAMP canonical types */
+.page-home .feed-card .news-tag-announcement { background: #e3c14a; }
+.page-home .feed-card .news-tag-updates      { background: #6a2c70; color: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.14); }
+.page-home .feed-card .news-tag-field-notes  { background: #5f7a3a; color: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.14); }
+.page-home .feed-card .news-tag-in-the-news  { background: #4f77a6; color: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.14); }
+.page-home .feed-card .news-tag-ideas        { background: #c56a2a; }
+.page-home .feed-card .news-tag-admin        { background: #d77a8a; }
+.page-home .feed-card .news-tag-qa           { background: #8e6bbf; }

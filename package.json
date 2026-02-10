@@ -1,0 +1,12 @@
+{
+  "name": "champ-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "check": "node --check assets/js/champ.js && node scripts/build-data.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

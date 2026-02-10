@@ -1,0 +1,20 @@
+{
+  "siteName": "C.H.A.M.P. Community Hub",
+  "protonFeed": { "maxItems": 10 },
+  "calendar": { "tz": "America/New_York" },
+  "suggestionBox": {
+  "endpoint": "https://formspree.io/f/xjkjbrqw"
+  },
+  "eventSubmission": {
+  "endpoint": "https://champ-add-event.comm-hub-myco.workers.dev/add-event"
+  },
+  "gallerySubmission": {
+    "endpoint": "https://champ-gallery-worker.comm-hub-myco.workers.dev/add-gallery"
+  },
+  "newsSubmission": {
+      "upsertEndpoint": "https://champ-gallery-worker.comm-hub-myco.workers.dev/upsert-news",
+      "archiveEndpoint": "https://champ-gallery-worker.comm-hub-myco.workers.dev/archive-news",
+      "pinEndpoint": "https://champ-gallery-worker.comm-hub-myco.workers.dev/pin-news",
+      "unpinEndpoint": "https://champ-gallery-worker.comm-hub-myco.workers.dev/unpin-news"
+  }
+}

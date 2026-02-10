@@ -1,0 +1,125 @@
+{
+  "updatedAt": "2026-02-09T23:10:54.213Z",
+  "items": [
+    {
+      "id": "2025-10-17-community-meetup.txt",
+      "title": "Community Kickoff Meetup",
+      "date": "2025-10-17",
+      "time": "18:30",
+      "location": "Jula's - Cambridge, MA",
+      "link": "https://docs.google.com/document/d/11lADCB9bFD4vD4SnSDupXL7S__kaE-7kQYEsD8fPpB4/edit?usp=sharing",
+      "contact": "",
+      "description": "The very first meeting! Establishing mission and values, initial membership, etc.",
+      "sortKey": "2025-10-17T18:30",
+      "source": "content/events"
+    },
+    {
+      "id": "2025-11-22-outsider-mushrooms.txt",
+      "title": "Outsider Mushrooms - A walk with Larry Millman",
+      "date": "2025-11-22",
+      "time": "15:30",
+      "location": "Middlesex Fells Reservation",
+      "link": "https://www.eventbrite.com/e/fall-forest-explorations-tickets-1853763459409",
+      "contact": "",
+      "description": "Larry Millman and Earthwise Aware (EwA) naturalists will be leading a forest walk through Middlesex Fells Reservation to explore and celebrate the park’s remarkable biodiversity. The walk will highlight fungi and their fascinating roles in the forest, while also looking at the broader web of life, including the fauna, flora, and habitats that connect and sustain this vibrant ecosystem.",
+      "sortKey": "2025-11-22T15:30",
+      "source": "content/events"
+    },
+    {
+      "id": "2025-11-23-friendsgiving-dinner.txt",
+      "title": "CHAMP Friendsgiving 2025",
+      "date": "2025-11-23",
+      "time": "16:00",
+      "location": "Jula's - Cambridge, MA",
+      "link": "https://docs.google.com/document/d/13JtGiVtJLu7h7P7Ec3S8geU1fuafwskdzKl0MR8NVVw/edit?usp=sharing",
+      "contact": "",
+      "description": "Join us for a friendly dinner - Questions: call/text Jon @ 917-957-5152",
+      "sortKey": "2025-11-23T16:00",
+      "source": "content/events"
+    },
+    {
+      "id": "2025-11-28-testing.txt",
+      "title": "Testing",
+      "date": "2025-11-28",
+      "time": "13:40",
+      "location": "Ipswich, MA, USA",
+      "link": "https://en.wikipedia.org/wiki/Lawrence_Millman",
+      "contact": "Cody (testing)",
+      "description": "Test",
+      "sortKey": "2025-11-28T13:40",
+      "source": "content/events"
+    },
+    {
+      "id": "2025-12-07-millman-foray-lincoln-meadows.txt",
+      "title": "CHAMP Foray with Larry Millman",
+      "date": "2025-12-07",
+      "time": "11:00",
+      "location": "Codman Woods, Lincoln, MA",
+      "link": "https://docs.google.com/spreadsheets/d/1iRn-5UC78R-oNr_ZOmiesGjwlaaqbgDJ6znYQFeixPg/edit?usp=sharing",
+      "contact": "",
+      "description": "CHAMP's own Larry Millman will lead a foray through Codman Woods on Sunday, December 7th at 11:00 AM. Expect to find many lesser-known species an exciting diversity of ecological niches being exploited! Click the link at the bottom of the page to enter your info on our sign-up sheet.      ~ Parking at Donelan's Supermarket - 145 Lincoln Road, Lincoln, MA 01773          [Note from Larry]: \"Follow the trail and meet in the picnic area adjacent to the parking lot- we'll head out from there. ~",
+      "sortKey": "2025-12-07T11:00",
+      "source": "content/events"
+    },
+    {
+      "id": "2025-12-07-bmc-duff-sale.txt",
+      "title": "BMC Holiday Party & Duff Sale",
+      "date": "2025-12-07",
+      "time": "15:00",
+      "location": "Harvard Herbaria",
+      "link": "https://maps.app.goo.gl/NRM1YHQJemnGhVxW9",
+      "contact": "",
+      "description": "Boston Mycology Club is hosting it's final social event of the year! The concept of a duff sale is to bring mushroom items that you no longer need and donate them to the sale table. It's a great chance to have a bite to eat and talk about mushrooms. There will be refreshments and wine as well as a potluck (bring a dish!). Proceeds benefit the BMC and help to bring more programs and events for 2026!",
+      "sortKey": "2025-12-07T15:00",
+      "source": "content/events"
+    },
+    {
+      "id": "2025-12-16-ravioli-ai-funghi-eataly.txt",
+      "title": "Eataly - Ravioli ai Funghi",
+      "date": "2025-12-16",
+      "time": "15:00",
+      "location": "Eataly Boston",
+      "link": "https://www.eventbrite.com/e/hands-on-ravioli-ai-funghi-tickets-1854398910059",
+      "contact": "",
+      "description": "It’s time to get your hands messy! In our hands-on format, our Scuola Chef will guide you through how to prepare Mushroom Ravioli.",
+      "sortKey": "2025-12-16T15:00",
+      "source": "content/events"
+    },
+    {
+      "id": "2026-01-07-boslabs-virtual-open-house.txt",
+      "title": "BOSLabs Virtual Open House",
+      "date": "2026-01-07",
+      "time": "19:00",
+      "location": "Cambridge, MA",
+      "link": "https://www.meetup.com/boslab/events/311397404/?_xtd=gqFyqTIyNzEyNjgyNaFwo2FwaQ%253D%253D&from=ref",
+      "contact": "Jon Applfield",
+      "description": "Join other CHAMP members in advocating for a partnership with BOSLabs and see their facilities!",
+      "sortKey": "2026-01-07T19:00",
+      "source": "content/events"
+    },
+    {
+      "id": "2026-01-09-boslabs-in-person-tour.txt",
+      "title": "BOSLabs In-Person Tour",
+      "date": "2026-01-09",
+      "time": "13:00",
+      "location": "BOSLabs, 561 Windsor St, Somerville, MA 02143",
+      "link": "https://maps.app.goo.gl/YZVEwv4yz2vSYMwC6",
+      "contact": "Jon Applefield  (917) 957-5152",
+      "description": "Join Wendy Pouliot, President of BOSLabs, for a tour of their operations. Wendy is a neuroscientist committed to science education and outreach. We’ll learn what BOSLabs may offer a budding mycology group like C.H.A.M.P. ~There is free street parking and 2 spots in front of the building. The closest T stop is Union square green line. The lab is suite b405 on the fourth floor.~",
+      "sortKey": "2026-01-09T13:00",
+      "source": "content/events"
+    },
+    {
+      "id": "2026-04-29-chromatic-wonders-of-the-fungi-kingdom-lecture.txt",
+      "title": "Chromatic Wonders of the Fungi Kingdom (lecture)",
+      "date": "2026-04-29",
+      "time": "19:00",
+      "location": "Virtual",
+      "link": "https://purchase.nebg.org/PatronEducation.aspx?pid=20151&cal=https%3a%2f%2fpurchase.nebg.org%3a443%2fcalendar.aspx%3f_gl%3d1*1oa28s*_gcl_au*NzY0OTAxMzQuMTc2NTgyMDI2Mw..*_ga*MTExNjc2NzY5Mi4xNzY1ODIwMjYz*_ga_MBB679GDLP*czE3NjU4MjAyNjIkbzEkZzAkdDE3NjU4MjAyNjIkajYwJGwwJGgw",
+      "contact": "New England Botanic Garden",
+      "description": "Discover the vibrant world of fungal dyes with artist Julie Beeler, creator of the Mushroom Color Atlas.  Explore how mushrooms reveal a hidden spectrum of color through art, science, and nature-inspired design. Learn about foraging the colors under your feet and preparing them for cloth and paper.",
+      "sortKey": "2026-04-29T19:00",
+      "source": "content/events"
+    }
+  ]
+}

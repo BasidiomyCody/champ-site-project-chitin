@@ -1,0 +1,4 @@
+Title: C.H.A.M.P. Member Contact Sheet
+Url: https://docs.google.com/spreadsheets/d/1eDgHEFcqv6ZFrzvurP0dLvN0ZE348OF1Ub8GP8KivdE/edit?usp=sharing
+Description: Names, emails, and phone numbers for members of CHAMP.
+Category: Google Sheets

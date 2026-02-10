@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="champ-base" content="" />
+  <title>C.H.A.M.P. — Gallery</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <script defer src="../assets/js/vendor/luxon.min.js"></script>
+  <script defer src="../assets/js/theme-toggle.js"></script>
+  <script defer src="../assets/js/champ.js"></script>
+</head>
+<body data-page="gallery">
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo"><img src="../assets/images/CHAMP_logo_big.png" alt="C.H.A.M.P. Logo" /></div>
+      <div class="titles"><h1>C.H.A.M.P.</h1><p>Gallery</p></div>
+    </div>
+    <nav class="site-nav">
+      <a href="../">Home</a>
+      <a href="../news/">News</a>
+      <a href="../calendar/">Calendar</a>
+      <a class="active" href="./">Gallery</a>
+      <a href="../links/">Links</a>
+      <a href="../feedback/">Feedback</a>
+      <a href="../maps/">Maps</a>
+      <a href="../about/">About</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+        <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+        <span class="theme-toggle-label">Dark</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="page-main">
+    <section class="card">
+      <header class="front-section-header">
+        <h2>Gallery</h2>
+        <p class="muted">Filter by tag, then open any image in a new tab.</p>
+      </header>
+
+      <div class="form-row" style="max-width:360px;">
+        <label for="gallery-filter">Filter</label>
+        <select id="gallery-filter"></select>
+      </div>
+
+      <div id="gallery-status" class="muted"></div>
+      <div id="gallery-grid" class="events-grid"></div>
+
+      <div class="muted" style="margin-top:12px;">
+        <a href="submit/">Submit a photo →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span id="year"></span> C.H.A.M.P.</span>
+  </footer>
+</body>
+</html>
