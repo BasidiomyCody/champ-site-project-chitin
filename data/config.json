@@ -2,7 +2,8 @@
   "site": {
     "name": "C.H.A.M.P.",
     "timezone": "America/New_York",
-    "basePathHint": "/champ-site"
+    "basePathHint": "/champ-site-project-chitin"
+
   },
   "data": {
     "news": {
