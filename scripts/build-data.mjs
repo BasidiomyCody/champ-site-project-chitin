@@ -82,7 +82,7 @@ function buildEvents() {
 
   items.sort((a,b)=>String(a.sortKey).localeCompare(String(b.sortKey)));
 
-  fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items }, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify({ items }, null, 2));
   console.log(`Wrote ${items.length} events -> ${path.relative(ROOT, outPath)}`);
 }
 
@@ -116,7 +116,7 @@ function buildLinks() {
 
   items.sort((a,b)=>String(a.sortKey).localeCompare(String(b.sortKey)));
 
-  fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items }, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify({ items }, null, 2));
   console.log(`Wrote ${items.length} links -> ${path.relative(ROOT, outPath)}`);
 }
 
@@ -126,7 +126,7 @@ function normalizeGallery() {
   ensureDir(path.dirname(outPath));
 
   if (!fs.existsSync(src)) {
-    fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items: [] }, null, 2));
+    fs.writeFileSync(outPath, JSON.stringify({ items: [] }, null, 2));
     console.log('No gallery/index.json found; wrote empty gallery.json');
     return;
   }
@@ -148,7 +148,7 @@ function normalizeGallery() {
     };
   });
 
-  fs.writeFileSync(outPath, JSON.stringify({ updatedAt: new Date().toISOString(), items: norm }, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify({ items: norm }, null, 2));
   console.log(`Wrote ${norm.length} gallery items -> ${path.relative(ROOT, outPath)}`);
 }
 
