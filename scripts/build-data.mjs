@@ -47,7 +47,7 @@ function buildEvents() {
   const outPath = path.join(ROOT, 'data', 'events', 'events.json');
   ensureDir(path.dirname(outPath));
 
-  const files = fs.readdirSync(srcDir).filter(f => f.toLowerCase().endsWith('.txt')).sort();
+  const files = fs.readdirSync(dir).filter(f => f.endsWith(".txt")).sort();
   const items = [];
 
   for (const file of files) {
@@ -91,7 +91,7 @@ function buildLinks() {
   const outPath = path.join(ROOT, 'data', 'links', 'links.json');
   ensureDir(path.dirname(outPath));
 
-  const files = fs.readdirSync(srcDir).filter(f => f.toLowerCase().endsWith('.txt')).sort();
+  const files = fs.readdirSync(dir).filter(f => f.endsWith(".txt")).sort();
   const items = [];
 
   for (const file of files) {
