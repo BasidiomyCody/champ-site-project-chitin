@@ -157,7 +157,6 @@ function buildMapsPlaceholder() {
   ensureDir(path.dirname(outPath));
   if (fs.existsSync(outPath)) return;
   const example = {
-    updatedAt: new Date().toISOString(),
     items: [
       {
         id: 'north-shore-forays',
