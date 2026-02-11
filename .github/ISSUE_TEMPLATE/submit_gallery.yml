@@ -1,0 +1,47 @@
+name: "Submit a Gallery Item"
+description: "Propose a new Gallery entry (provide image link)"
+title: "[Gallery] "
+labels: ["submission:gallery"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Title
+    validations:
+      required: true
+
+  - type: input
+    id: date
+    attributes:
+      label: Date (YYYY-MM-DD)
+    validations:
+      required: true
+
+  - type: input
+    id: image_url
+    attributes:
+      label: Image URL (Google Drive share link, Imgur, etc.)
+    validations:
+      required: true
+
+  - type: input
+    id: credit
+    attributes:
+      label: Photographer / credit (optional)
+    validations:
+      required: false
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags (comma-separated)
+      placeholder: "lichen, headstones, north-shore"
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description (optional)
+    validations:
+      required: false

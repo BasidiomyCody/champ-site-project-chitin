@@ -1,0 +1,67 @@
+name: Submission → PR
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  make-pr:
+    if: >
+      contains(join(github.event.issue.labels.*.name, ','), 'submission:')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Generate content file(s) from issue
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: node scripts/submission-from-issue.mjs
+
+      - name: Build generated data
+        run: npm run build:data
+
+      - name: Commit changes to a new branch
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "chitin-bot"
+          git config user.email "chitin-bot@users.noreply.github.com"
+          BRANCH="submissions/issue-${ISSUE_NUMBER}"
+          git checkout -b "$BRANCH"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Submission #${ISSUE_NUMBER}"
+          git push origin "$BRANCH"
+
+      - name: Open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          BRANCH="submissions/issue-${ISSUE_NUMBER}"
+          gh pr create \
+            --title "Submission #${ISSUE_NUMBER}" \
+            --body "Auto-generated from issue #${ISSUE_NUMBER}." \
+            --head "$BRANCH" \
+            --base "main"
