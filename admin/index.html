@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CHAMP Admin</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body data-page="admin">
+  <header class="topbar">
+    <a class="brand" href="../">CHAMP</a>
+    <nav class="nav">
+      <a href="../news/">News</a>
+      <a href="../calendar/">Calendar</a>
+      <a href="../gallery/">Gallery</a>
+      <a href="../links/">Links</a>
+      <a class="active" href="./">Admin</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Admin Utilities</h1>
+    <p class="muted">Submissions create issues → automation opens PRs → merge to publish.</p>
+
+    <div class="grid cards">
+      <section class="card">
+        <h2>Submit Event</h2>
+        <p>Add a calendar event proposal via GitHub Issue Form.</p>
+        <a class="btn" id="admin-submit-event" href="#">Open form</a>
+      </section>
+
+      <section class="card">
+        <h2>Submit News</h2>
+        <p>Add a news item proposal via GitHub Issue Form.</p>
+        <a class="btn" id="admin-submit-news" href="#">Open form</a>
+      </section>
+
+      <section class="card">
+        <h2>Submit Link</h2>
+        <p>Add a link/resource proposal via GitHub Issue Form.</p>
+        <a class="btn" id="admin-submit-link" href="#">Open form</a>
+      </section>
+
+      <section class="card">
+        <h2>Submit Gallery</h2>
+        <p>Add a gallery entry proposal (external image URL).</p>
+        <a class="btn" id="admin-submit-gallery" href="#">Open form</a>
+      </section>
+    </div>
+
+    <hr class="sep" />
+    <p class="muted">
+      Tip: After submission, check the PR created by automation in GitHub → merge when ready.
+    </p>
+  </main>
+
+  <script src="../assets/js/champ.js"></script>
+</body>
+</html>

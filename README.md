@@ -33,13 +33,38 @@ Open the folder with VS Code and use any static server:
 - Source of truth: `content/events/*.txt`
 - Build step: `npm run build:data` compiles into `data/events/events.json`
 
+Add an Event
+Create a new file in:
+content/events/YYYY-MM-DD-some-slug.txt
+Run:
+npm run build:data
+Commit:
+git add content/events data/events/events.json
+git commit -m "Add event: <name>"
+git push
+
 ### Links
 - Source of truth: `content/links/*.txt`
 - Build step: `npm run build:data` compiles into `data/links/links.json`
 
+Add a Link
+Same flow:
+add content/links/*.txt
+run npm run build:data
+commit data/links/links.json
+
 ### Gallery
 - Source of truth: `gallery/index.json` + `gallery/images/...`
 - Build step: normalizes into `data/gallery/gallery.json`
+
+Add a Gallery item (manual mode)
+Add image file to:
+gallery/images/<filename>
+Add meta JSON to:
+gallery/meta/<id>.json
+Run:
+npm run build:data
+Commit updated data/gallery/gallery.json
 
 ### News
 - Source of truth: `data/news/news.json`

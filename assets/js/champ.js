@@ -12,46 +12,6 @@
   const TAG = '[CHAMP]';
 
   // ------------------------------
-  // Theme toggle (kept tiny + self-contained)
-  // ------------------------------
-
-  const THEME_STORAGE_KEY = 'champ_theme'; // 'dark' | 'light'
-
-  function getPreferredTheme() {
-    const saved = (localStorage.getItem(THEME_STORAGE_KEY) || '').trim().toLowerCase();
-    if (saved === 'dark' || saved === 'light') return saved;
-    // Default: bright site → light mode
-    return 'light';
-  }
-
-  function applyTheme(theme) {
-    const t = theme === 'dark' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = t;
-    localStorage.setItem(THEME_STORAGE_KEY, t);
-
-    const btn = document.querySelector('[data-theme-toggle]');
-    if (btn) {
-      const isDark = t === 'dark';
-      btn.setAttribute('aria-pressed', String(isDark));
-
-      const label = btn.querySelector('.theme-toggle-label');
-      if (label) label.textContent = isDark ? 'Dark' : 'Light';
-    }
-  }
-
-  function initThemeToggle() {
-    // Apply immediately (no DOMContentLoaded required)
-    try { applyTheme(getPreferredTheme()); } catch {}
-
-    document.addEventListener('click', (e) => {
-      const btn = e.target && e.target.closest ? e.target.closest('[data-theme-toggle]') : null;
-      if (!btn) return;
-      const current = (document.documentElement.dataset.theme || 'light').toLowerCase();
-      applyTheme(current === 'dark' ? 'light' : 'dark');
-    });
-  }
-
-  // ------------------------------
   // Core utilities
   // ------------------------------
 
@@ -87,14 +47,10 @@
     }
 
     // 3) GH Pages heuristic: if path is /<repo>/..., use /<repo>
-    // Works for custom domains too (then this returns "" because repo segment may not exist).
     const p = window.location.pathname || '/';
     const parts = p.split('/').filter(Boolean);
     if (parts.length >= 1) {
       const repo = parts[0];
-      // Only apply if we look like we're hosting from a repo root (common when index.html lives there)
-      // and not if we're clearly at domain root (custom domains often have deeper routes but no repo prefix).
-      // Heuristic: if repo name contains "champ" OR if we actually see /<repo>/assets on page.
       if (/champ/i.test(repo)) return '/' + repo;
     }
 
@@ -233,7 +189,6 @@
       const txt = await res.text().catch(() => '');
       throw new Error(`POST failed (${res.status}): ${resolved}${txt ? ` — ${txt}` : ''}`);
     }
-    // Best effort JSON response
     const ct = res.headers.get('content-type') || '';
     if (ct.includes('application/json')) return res.json();
     return res.text();
@@ -275,11 +230,19 @@
       maps: 'data/maps/maps.json'
     };
 
+    // NEW: repo info for admin links
+    const repoOwner = cfg.repo?.owner || cfg.github?.owner || cfg.repoOwner || '';
+    const repoName = cfg.repo?.name || cfg.github?.repo || cfg.repoName || '';
+
     return {
       site: {
         name: siteName,
         timezone,
         basePathHint: cfg.site?.basePathHint || cfg.basePathHint || '/champ-site'
+      },
+      repo: {
+        owner: repoOwner,
+        name: repoName
       },
       data,
       integrations: {
@@ -386,7 +349,6 @@
     const s = String(dateStr || '').trim();
     if (!s) return '';
 
-    // Prefer luxon if present
     if (window.luxon?.DateTime) {
       const { DateTime } = window.luxon;
       const dt = DateTime.fromISO(s, { zone: cfg.site.timezone });
@@ -414,21 +376,17 @@
   }
 
   function sanitizeHtml(html) {
-    // minimal sanitizer (we control content source but still remove obvious hazards)
     const tmp = document.createElement('div');
     tmp.innerHTML = String(html || '');
 
-    // remove scripts
     tmp.querySelectorAll('script, iframe, object, embed').forEach((n) => n.remove());
 
-    // remove on* handlers
     tmp.querySelectorAll('*').forEach((el) => {
       [...el.attributes].forEach((attr) => {
         if (/^on/i.test(attr.name)) el.removeAttribute(attr.name);
       });
     });
 
-    // ensure links are safe-ish
     tmp.querySelectorAll('a[href]').forEach((a) => {
       const href = a.getAttribute('href') || '';
       if (/^javascript:/i.test(href)) a.removeAttribute('href');
@@ -479,9 +437,8 @@
           if (!Number.isFinite(date.getTime())) return false;
           const today = new Date();
           if (ev.time) return date.getTime() >= today.getTime();
-          // date-only: keep until end of day
           const eod = new Date(date);
-          eod.setHours(23,59,59,999);
+          eod.setHours(23, 59, 59, 999);
           return eod.getTime() >= today.getTime();
         });
 
@@ -1276,147 +1233,12 @@
     }
   }
 
-  async function renderGallerySubmit(cfg) {
-    U.setYear('#year');
-
-    const form = U.q('#gallery-submit-form');
-    const statusEl = U.q('#gallery-submit-result');
-    if (!form) return;
-
-    const endpoint = cfg.integrations?.endpoints?.gallerySubmission || '';
-    const photoInput = form.querySelector('input[name="photo"]');
-    const MAX_BYTES = 5 * 1024 * 1024;
-
-    function setStatus(msg, isError = false) {
-      if (!statusEl) return;
-      statusEl.textContent = msg;
-      statusEl.style.color = isError ? 'var(--accent-3)' : '';
-    }
-
-    function slugify(s) {
-      return String(s || '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '')
-        .slice(0, 80);
-    }
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const r = new FileReader();
-        r.onerror = () => reject(new Error('Failed to read file.'));
-        r.onload = () => {
-          const res = String(r.result || '');
-          const m = res.match(/^data:[^;]+;base64,(.*)$/);
-          resolve(m ? m[1] : res);
-        };
-        r.readAsDataURL(file);
-      });
-    }
-
-    if (!endpoint) {
-      setStatus('No automated endpoint configured. Submitting will generate a copy/paste PR template.');
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const fd = new FormData(form);
-      const file = photoInput && photoInput.files && photoInput.files[0] ? photoInput.files[0] : null;
-      if (!file) {
-        setStatus('Please choose a photo to upload.', true);
-        return;
-      }
-      if (file.size > MAX_BYTES) {
-        setStatus('Photo is too large (max 5MB). Please resize and try again.', true);
-        return;
-      }
-
-      const description = String(fd.get('description') || '').trim();
-      const submitted_by = String(fd.get('name') || '').trim();
-      const date = String(fd.get('date') || '').trim();
-      const tags = String(fd.get('tags') || '')
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean);
-
-      // Generate a stable id for manual PRs
-      const day = date || new Date().toISOString().slice(0, 10);
-      const baseId = `${day}-${slugify(description || file.name || 'photo')}`;
-      const uniq = Math.random().toString(16).slice(2, 8);
-      const id = `${baseId}-${uniq}`;
-
-      const ext = (file.name.match(/\.[a-z0-9]+$/i) || [''])[0] || '.jpg';
-      const imageRel = `images/${id}${ext}`;
-
-      if (endpoint) {
-        const btn = form.querySelector('button[type="submit"]');
-        if (btn) btn.disabled = true;
-        setStatus('Submitting…');
-
-        try {
-          const b64 = await fileToBase64(file);
-
-          const payload = {
-            id,
-            image: imageRel,
-            description,
-            tags,
-            date: date || '',
-            submitted_by: submitted_by || '',
-            mime: file.type || '',
-            original_filename: file.name || '',
-            bytes: file.size || 0,
-            image_base64: b64,
-            page: window.location.href,
-            timestamp: new Date().toISOString(),
-          };
-
-          const resp = await U.postJson(endpoint, payload);
-          form.reset();
-          const pr = resp && (resp.pr_url || resp.url || resp.html_url);
-          setStatus(pr ? `Submitted! PR: ${pr}` : 'Submitted!');
-        } catch (err) {
-          console.error(TAG, 'gallery submit failed', err);
-          setStatus(err.message || String(err), true);
-        } finally {
-          if (btn) btn.disabled = false;
-        }
-
-        return;
-      }
-
-      // Manual mode: provide a PR-ready template.
-      const meta = {
-        id,
-        image: imageRel,
-        description,
-        tags,
-        date: date || '',
-        submitted_by: submitted_by || '',
-        mime: file.type || '',
-      };
-
-      const template =
-        `Manual submission (no endpoint configured)\n\n` +
-        `1) Add the image file:\n   gallery/images/${id}${ext}\n` +
-        `2) Add the meta JSON file:\n   gallery/meta/${id}.json\n\n` +
-        `gallery/meta/${id}.json contents:\n` +
-        JSON.stringify(meta, null, 2);
-
-      // Use textContent to keep it simple and safe.
-      setStatus(template);
-    });
-  }
-
   async function renderFeedback(cfg) {
     U.setYear('#year');
 
-    // Suggestion form
     const suggestionMount = U.q('#suggestion-box');
     if (suggestionMount) await renderSuggestionBox(cfg, suggestionMount);
 
-    // Event submission (optional)
     const eventForm = U.q('#submit-event-form');
     const eventStatus = U.q('#submit-event-status');
     if (eventForm) {
@@ -1516,16 +1338,60 @@
   }
 
   // ------------------------------
+  // Admin (NEW)
+  // ------------------------------
+
+  function setHref(id, href) {
+    const a = document.getElementById(id);
+    if (!a) return;
+    a.href = href;
+  }
+
+  function buildIssueFormUrl(cfg, templateFile) {
+    const owner = cfg?.repo?.owner || '';
+    const name = cfg?.repo?.name || '';
+    if (!owner || !name) return '';
+    return `https://github.com/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/issues/new?template=${encodeURIComponent(templateFile)}`;
+  }
+
+  async function renderAdmin(cfg) {
+    U.setYear('#year');
+
+    // Optional status element on the admin page
+    const statusEl = U.q('#admin-status');
+
+    const owner = cfg?.repo?.owner || '';
+    const name = cfg?.repo?.name || '';
+
+    if (!owner || !name) {
+      const msg =
+        'Repo info is not configured. Set "repo.owner" and "repo.name" in data/config.json to enable Admin submission links.';
+      U.setText(statusEl, msg);
+
+      // Disable/hard-set to "#" so the UI is obvious
+      setHref('admin-submit-event', '#');
+      setHref('admin-submit-news', '#');
+      setHref('admin-submit-link', '#');
+      setHref('admin-submit-gallery', '#');
+      return;
+    }
+
+    // Inject links to GitHub Issue Form templates
+    setHref('admin-submit-event', buildIssueFormUrl(cfg, 'submit_event.yml'));
+    setHref('admin-submit-news', buildIssueFormUrl(cfg, 'submit_news.yml'));
+    setHref('admin-submit-link', buildIssueFormUrl(cfg, 'submit_link.yml'));
+    setHref('admin-submit-gallery', buildIssueFormUrl(cfg, 'submit_gallery.yml'));
+
+    U.setText(statusEl, '');
+  }
+
+  // ------------------------------
   // Boot
   // ------------------------------
 
   async function boot() {
     try {
-      initThemeToggle();
       const cfg = await U.readConfig();
-      // now base() can trust cfg
-      // (U.base() reads _cache.config)
-
       const page = document.body?.dataset?.page || '';
 
       switch (page) {
@@ -1547,9 +1413,6 @@
         case 'gallery':
           await renderGallery(cfg);
           break;
-        case 'gallery-submit':
-          await renderGallerySubmit(cfg);
-          break;
         case 'links':
           await renderLinks(cfg);
           break;
@@ -1559,8 +1422,10 @@
         case 'maps':
           await renderMaps(cfg);
           break;
+        case 'admin': // NEW
+          await renderAdmin(cfg);
+          break;
         default:
-          // no-op
           U.setYear('#year');
           break;
       }
