@@ -109,6 +109,18 @@
       "source": "content/events"
     },
     {
+      "id": "2026-02-23-champ-admin-meeting.txt",
+      "title": "CHAMP Admin Meeting",
+      "date": "2026-02-23",
+      "time": "17:30",
+      "location": "Belmont Public Library",
+      "link": "https://maps.app.goo.gl/TTVcEEfoTzgLvQVPA",
+      "contact": "basidiomycody@gmail.com",
+      "description": "Join us at the Belmont Public Library if you want to help plan the organizational structure of CHAMP!",
+      "sortKey": "2026-02-23T17:30",
+      "source": "content/events"
+    },
+    {
       "id": "2026-04-29-chromatic-wonders-of-the-fungi-kingdom-lecture.txt",
       "title": "Chromatic Wonders of the Fungi Kingdom (lecture)",
       "date": "2026-04-29",
