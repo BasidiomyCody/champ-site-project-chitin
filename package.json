@@ -5,7 +5,8 @@
   "scripts": {
     "build:data": "node scripts/build-data.mjs",
     "check": "node --check assets/js/champ.js && node scripts/verify-generated.mjs",
-    "check:generated": "node scripts/verify-generated.mjs"
+    "check:generated": "node scripts/verify-generated.mjs",
+    "validate:content": "node scripts/validate-content.mjs"
   },
   "engines": {
     "node": ">=18"
