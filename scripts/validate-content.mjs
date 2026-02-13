@@ -324,11 +324,18 @@ function validateGallery(errors, warnings) {
       continue;
     }
 
-    const id = String(obj.id || '').trim();
-    const title = String(obj.title || '').trim();
+    const filenameBase = file.replace(/\.json$/i, '');
+
+    // id is OPTIONAL: fall back to filename base (matches how your repo behaves today)
+    const id = String(obj.id || filenameBase).trim();
+
+    // title is OPTIONAL: warn if missing; try common alternates if present
+    const title =
+      String(obj.title || obj.name || obj.caption || '').trim();
+
     const date = String(obj.date || '').trim();
 
-    // Your pipeline prefers obj.image; accept common variants too
+    // image is REQUIRED for a gallery item to display
     const image = String(obj.image || obj.image_filename || obj.src || '').trim();
 
     const credit = String(obj.credit || obj.submitted_by || obj.submittedby || '').trim();
@@ -336,14 +343,8 @@ function validateGallery(errors, warnings) {
 
     const tags = asArray(obj.tags).map((t) => String(t).trim()).filter(Boolean);
 
-    if (!id) pushErr(errors, fp, `Missing required field "id".`);
-    if (!title) pushErr(errors, fp, `Missing required field "title".`);
-
-    // Date is recommended, but normalizeGallery sorts by date or id
-    if (date && !isIsoDate(date)) pushErr(errors, fp, `Invalid date "${date}". Expected YYYY-MM-DD.`);
-    if (!date) pushWarn(warnings, fp, `Missing "date" (recommended for sorting).`);
-
-    // Image is required for gallery display
+    // Required checks
+    if (!id) pushErr(errors, fp, `Missing "id" and could not derive from filename.`);
     if (!image) {
       pushErr(errors, fp, `Missing required field "image".`);
     } else {
@@ -358,12 +359,15 @@ function validateGallery(errors, warnings) {
         if (!exists(resolved.value)) {
           pushErr(errors, fp, `Image file does not exist: ${rel(resolved.value)} (from "${image}")`);
         }
-        // Warn if using legacy "images/" prefix since build will rewrite
-        if (image.startsWith('images/')) {
-          pushWarn(warnings, fp, `Image starts with "images/". build-data will rewrite to "gallery/images/...". (OK)`);
-        }
       }
     }
+
+    // Date: recommended
+    if (date && !isIsoDate(date)) pushErr(errors, fp, `Invalid date "${date}". Expected YYYY-MM-DD.`);
+    if (!date) pushWarn(warnings, fp, `Missing "date" (recommended for sorting).`);
+
+    // Title: recommended (NOT required)
+    if (!title) pushWarn(warnings, fp, `Missing "title" (optional; recommended for future UI).`);
 
     // Tags sanity
     if (obj.tags != null && !Array.isArray(obj.tags)) {
@@ -373,21 +377,25 @@ function validateGallery(errors, warnings) {
       if (t.length > 64) pushWarn(warnings, fp, `Tag is very long (>64 chars): "${t.slice(0, 80)}..."`);
     }
 
-    // ID uniqueness and filename recommendation
+    // Uniqueness by id (derived or explicit)
     if (id) {
       if (seenIds.has(id)) pushErr(errors, fp, `Duplicate gallery id "${id}".`);
       seenIds.add(id);
-      if (file !== `${id}.json`) {
-        pushWarn(warnings, fp, `Recommended filename "${id}.json" (got "${file}").`);
-      }
     }
 
+    // Filename recommendation: only warn if there IS an explicit id that doesn't match
+    if (obj.id && String(obj.id).trim() && file !== `${String(obj.id).trim()}.json`) {
+      pushWarn(warnings, fp, `Recommended filename "${String(obj.id).trim()}.json" (got "${file}").`);
+    }
+
+    // Optional niceties
     if (!credit) pushWarn(warnings, fp, `No "credit"/"submitted_by" provided (optional, recommended).`);
     if (!description) pushWarn(warnings, fp, `No "description" provided (optional, recommended).`);
   }
 
   return files.length;
 }
+
 
 // ----------------- main -----------------
 
